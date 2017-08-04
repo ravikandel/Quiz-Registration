@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Fourth_CSIT_QUIZ_Registration.Models.participant>
+
+@{
+    ViewBag.Title = "Participant List";
+}
+
+<div class="row">
+
+    <div class="col-md-8">
+        <h2>Participants Check-In List</h2>
+    </div>
+
+    <div class="col-md-4">
+        <table style="margin-top:15px;">
+            <tr>
+
+                <th style="border-right:1px solid #000000;">Total Participants&nbsp;</th>
+                <th style="border-right:1px solid #000000;">&nbsp;Checked-In&nbsp;</th>
+                <th>&nbsp;Remaining</th>
+            </tr>
+            <tr>
+                <th style="border-right:1px solid #000000; color:red; text-align:center">@Model.Where(x => x.ID >= 1).Count()</th>
+                <th style="border-right:1px solid #000000; color:#0000FF; text-align:center">@Model.Where(x => x.CheckedIn == true).Count()</th>
+                <th style="text-align:center">@Model.Where(x => x.CheckedIn == false).Count()</th>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<p>
+    @Html.ActionLink("Add new Participant", "Create")
+</p>
+<table class="table">
+    <tr style="text-decoration:underline; font-size:1em;">
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CollegeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckedIn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    var color = "#000000";
+    if (item.CheckedIn == true)
+    {
+        color = "#0000FF";
+
+    }
+    else if (item.CheckedIn == false)
+    {
+        color = "#000000";
+
+    }
+
+    <tr style="color:@color; font-weight:bold;">
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Semester)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollegeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckedIn)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+        </td>
+    </tr>
+}
+
+</table>
